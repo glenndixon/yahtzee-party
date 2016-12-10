@@ -10,6 +10,8 @@
   width: 200px;
   height: 200px;
   transform-style: preserve-3d;
+
+  transition: transform 1s linear;
 }
 
 .Dice__face {
@@ -82,12 +84,21 @@
 
 @keyframes spin {
   0% { transform: rotate3d(1, 1, 1, 0deg); }
-  50% { transform: rotate3d(1, 1, 1, 180deg); }
-  100% { transform: rotate3d(1, 1, 1, 360deg); }
+  100% { transform: rotate3d(1, 3, 2, 720deg); }
 }
 
-.Dice__cube {
-	xanimation: spin 4s infinite linear;
+@keyframes spin2 {
+  0% { transform: rotate3d(1, 1, 1, 0deg); }
+  100% { transform: rotate3d(1, 2, 3, -720deg); }
+}
+
+.spin {
+	animation: spin 1s 1 ease;
+  transform-style: preserve-3d;
+}
+.spin2 {
+	animation: spin2 1s 1 ease;
+  transform-style: preserve-3d;
 }
 
 @keyframes derp {
