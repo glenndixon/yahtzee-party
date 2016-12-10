@@ -11,7 +11,8 @@
   height: 200px;
   transform-style: preserve-3d;
 
-  transition: transform 1s linear;
+  transition: transform 0.85s linear;
+  transition-delay: 0.15s;
 }
 
 .Dice__face {
@@ -83,8 +84,15 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate3d(1, 1, 1, 0deg); }
-  100% { transform: rotate3d(1, 3, 2, 720deg); }
+  0% {
+    transform: scale(1) rotate3d(1, 1, 1, 0deg);
+  }
+  15% {
+    transform: scale(1.1) rotate3d(1, 3, 2, 18deg);
+  }
+  100% {
+    transform: scale(1) rotate3d(1, 3, 2, 720deg);
+  }
 }
 
 @keyframes spin2 {
