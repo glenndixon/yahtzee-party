@@ -6,10 +6,8 @@
     "react-scripts": "0.8.2"
   },
   "dependencies": {
-    "create-keyframe-animation": "^0.1.0",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-motion": "^0.4.5"
+    "react-dom": "^15.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
