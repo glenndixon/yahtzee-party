@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Dice from './Dice';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      dice: 3
+    };
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -13,8 +23,18 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+
+        <div onClick={this.diceClick.bind(this)}>
+          <Dice value={this.state.dice} />
+        </div>
       </div>
     );
+  }
+
+  diceClick(e) {
+    this.setState({
+      dice: Math.floor(Math.random() * 6) + 1
+    });
   }
 }
 

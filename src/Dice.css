@@ -1,0 +1,102 @@
+.Dice {
+  perspective: 800px;
+	perspective-origin: 50% 100px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.Dice__cube {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  transform-style: preserve-3d;
+}
+
+.Dice__face {
+  position: absolute;
+	width: 200px;
+	height: 200px;
+  line-height: 200px;
+  text-align: center;
+  border: 10px solid #464646;
+  background-color: white;
+}
+
+.Dice__face--1 {
+  transform: translateZ(100px);
+}
+.Dice__face--6 {
+  transform: translateZ(-100px) rotateY(180deg);
+}
+.Dice__face--2 {
+  transform: rotateY(-270deg) translateX(100px);
+	transform-origin: top right;
+}
+.Dice__face--5 {
+  transform: rotateY(270deg) translateX(-100px);
+	transform-origin: center left;
+}
+.Dice__face--3 {
+  transform: rotateX(-90deg) translateY(-100px);
+	transform-origin: top center;
+}
+.Dice__face--4 {
+  transform: rotateX(90deg) translateY(100px);
+	transform-origin: bottom center;
+}
+
+.Dice__pip {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background-color: #464646;
+  position: absolute;
+}
+
+.Dice__pip--tl,
+.Dice__pip--bl,
+.Dice__pip--l {
+  left: 25px;
+}
+.Dice__pip--tr,
+.Dice__pip--br,
+.Dice__pip--r {
+  right: 25px;
+}
+.Dice__pip--tr,
+.Dice__pip--tl {
+  top: 25px;
+}
+.Dice__pip--br,
+.Dice__pip--bl {
+  bottom: 25px;
+}
+.Dice__pip--l,
+.Dice__pip--r,
+.Dice__pip--c {
+  top: 70px;
+}
+.Dice__pip--c {
+  left: 70px;
+}
+
+@keyframes spin {
+  0% { transform: rotate3d(1, 1, 1, 0deg); }
+  50% { transform: rotate3d(1, 1, 1, 180deg); }
+  100% { transform: rotate3d(1, 1, 1, 360deg); }
+}
+
+.Dice__cube {
+	xanimation: spin 4s infinite linear;
+}
+
+@keyframes derp {
+  0% { transform: rotate3d(1, 1, 1, 0deg); }
+  50% { transform: rotate3d(1, 2, 3, 180deg); }
+  100% { transform: rotate3d(1, 0, 0, 90deg); }
+}
+
+.animate {
+  animation: derp 4s 1 linear;
+  transform: rotate3d(1, 0, 0, 90deg);
+}
