@@ -26,7 +26,7 @@ class App extends Component {
         <button onClick={this.rollClick.bind(this)}>Roll</button>
 
         <div>
-          <Dice value={this.state.dice} random={this.state.lastRolled} animate={!!this.state.lastRolled} />
+          <Dice value={this.state.dice} lastRolled={this.state.lastRolled} animate={!!this.state.lastRolled} />
         </div>
       </div>
     );
@@ -36,7 +36,7 @@ class App extends Component {
 
     this.setState({
       dice: Math.floor(Math.random() * 6) + 1,
-      lastRolled: Math.random(),
+      lastRolled: new Date().getTime(),
     });
   }
 }

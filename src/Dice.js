@@ -12,7 +12,6 @@ const FACES = [
 
 const NUM_ANIMATIONS = 2;
 
-//TODO : https://github.com/HenrikJoreteg/create-keyframe-animation
 class Dice extends Component {
   constructor() {
     super();
@@ -37,8 +36,7 @@ class Dice extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps", nextProps);
-    if (nextProps.animate && (nextProps.random !== this.props.random)) {
+    if (nextProps.animate && (nextProps.lastRolled !== this.props.lastRolled)) {
       this._animationIndex += Math.floor(Math.random() * (NUM_ANIMATIONS - 1) + 1);
       this._animationIndex = this._animationIndex % NUM_ANIMATIONS;
     }
