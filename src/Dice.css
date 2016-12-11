@@ -16,10 +16,10 @@
 }
 
 .Dice__cube--2 {
-  transform: rotateY(270deg);
+  transform: rotateY(-90deg);
 }
 .Dice__cube--3 {
-  transform: rotateX(270deg);
+  transform: rotateX(-90deg);
 }
 .Dice__cube--4 {
   transform: rotateX(90deg);
