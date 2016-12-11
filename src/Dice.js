@@ -10,46 +10,23 @@ const FACES = [
   ['tl', 'tr', 'bl', 'br', 'l', 'r'],
 ];
 
-const TRANSFORMS = [
-  [0, 1, 0, 0],
-  [0, 2, 0, 270],
-  [3, 0, 0, 270],
-  [4, 0, 0, 90],
-  [0,5, 0, 90],
-  [0, 6, 0, 180],
-];
+const NUM_ANIMATIONS = 2;
 
 //TODO : https://github.com/HenrikJoreteg/create-keyframe-animation
 class Dice extends Component {
   constructor() {
     super();
 
-    this._currentTransform = 'rotate3d(0, 0, 0, 0deg)';
-    this._phase = 0;
-
-    this.state = {
-      value: 1,
-      random: 0
-    };
+    this._animationIndex = Math.floor(Math.random() * NUM_ANIMATIONS);
   }
 
   render() {
-    const config = TRANSFORMS[this.state.value - 1];
-    this._currentTransform = `rotate3d(${config[0]}, ${config[1]}, ${config[2]}, ${config[3]}deg)`;
+    const spinClass = this.props.animate ? `spin-${this._animationIndex}` : '';
 
-    this._phase = +!this._phase;
-
-    const style = {
-      transform: this._currentTransform
-    };
-
-    if (this._animationName) {
-      //style.animation = `1.5s linear ${this._animationName} 0s 1 normal both`;
-    }
     return (
-      <div className="Dice" onClick={this.blah.bind(this)}>
-        <div className={this._phase ? 'spin' : 'spin2'}>
-          <div className="Dice__cube" style={style}>
+      <div className="Dice">
+        <div className={spinClass}>
+          <div className={`Dice__cube Dice__cube--${this.props.value}`}>
             {FACES.map((pips, i) => <div className={`Dice__face Dice__face--${i + 1}`} key={i}>
               {pips.map((pip, j) => <div className={`Dice__pip Dice__pip--${pip}`} key={j}></div>)}
             </div>)}
@@ -59,40 +36,12 @@ class Dice extends Component {
     );
   }
 
-  // componentWillUpdate() {
-  //   const startingTransform = this._currentTransform;
-  //
-  //   const config = TRANSFORMS[this.state.value - 1];
-  //   this._currentTransform = `rotate3d(${config[0]}, ${config[1]}, ${config[2]}, ${config[3]}deg)`;
-  //   this._animationName = `move${Math.floor(Math.random() * 10000000).toString(32)}`
-  //   console.log(this.state.value);
-  //   animations.registerAnimation({
-  //     name: this._animationName,
-  //     animation: {
-  //       '0%': {
-  //         transform: startingTransform
-  //       },
-  //       '20%': {
-  //         transform: 'rotate3d(1, 3, 2, 500deg)'
-  //       },
-  //       '50%': {
-  //         transform: 'rotate3d(1, 3, 2, 1000deg)'
-  //       },
-  //       '70%': {
-  //         transform: 'rotate3d(1, 3, 2, 500deg)'
-  //       },
-  //       '100%': {
-  //         transform: this._currentTransform
-  //       }
-  //     }
-  //   });
-  // }
-
-  blah() {
-    this.setState({
-      value: Math.floor(Math.random() * 6) + 1,
-      random: Math.random()
-    });
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps", nextProps);
+    if (nextProps.animate && (nextProps.random !== this.props.random)) {
+      this._animationIndex += Math.floor(Math.random() * (NUM_ANIMATIONS - 1) + 1);
+      this._animationIndex = this._animationIndex % NUM_ANIMATIONS;
+    }
   }
 }
 

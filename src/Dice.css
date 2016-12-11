@@ -11,8 +11,24 @@
   height: 200px;
   transform-style: preserve-3d;
 
-  transition: transform 0.85s linear;
+  transition: transform 0.5s linear;
   transition-delay: 0.15s;
+}
+
+.Dice__cube--2 {
+  transform: rotateY(270deg);
+}
+.Dice__cube--3 {
+  transform: rotateX(270deg);
+}
+.Dice__cube--4 {
+  transform: rotateX(90deg);
+}
+.Dice__cube--5 {
+  transform: rotateY(90deg);
+}
+.Dice__cube--6 {
+  transform: rotateY(180deg);
 }
 
 .Dice__face {
@@ -83,39 +99,36 @@
   left: 70px;
 }
 
-@keyframes spin {
+@keyframes spin-0 {
   0% {
-    transform: scale(1) rotate3d(1, 1, 1, 0deg);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   }
-  15% {
-    transform: scale(1.1) rotate3d(1, 3, 2, 18deg);
+  12% {
+    transform: rotateX(-8deg) rotateY(-12deg) rotateZ(-7deg);
   }
   100% {
-    transform: scale(1) rotate3d(1, 3, 2, 720deg);
+    transform: rotateX(360deg) rotateY(1080deg) rotateZ(720deg);
   }
 }
 
-@keyframes spin2 {
-  0% { transform: rotate3d(1, 1, 1, 0deg); }
-  100% { transform: rotate3d(1, 2, 3, -720deg); }
+@keyframes spin-1 {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  12% {
+    transform: rotateX(12deg) rotateY(-8deg) rotateZ(22deg);
+  }
+  100% {
+    transform: rotateX(-360deg) rotateY(720deg) rotateZ(-1080deg);
+  }
 }
 
-.spin {
-	animation: spin 1s 1 ease;
+
+.spin-0 {
+	animation: spin-0 1.25s 1 ease;
   transform-style: preserve-3d;
 }
-.spin2 {
-	animation: spin2 1s 1 ease;
+.spin-1 {
+	animation: spin-1 1.25s 1 ease;
   transform-style: preserve-3d;
-}
-
-@keyframes derp {
-  0% { transform: rotate3d(1, 1, 1, 0deg); }
-  50% { transform: rotate3d(1, 2, 3, 180deg); }
-  100% { transform: rotate3d(1, 0, 0, 90deg); }
-}
-
-.animate {
-  animation: derp 4s 1 linear;
-  transform: rotate3d(1, 0, 0, 90deg);
 }

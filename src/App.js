@@ -8,7 +8,7 @@ class App extends Component {
     super();
 
     this.state = {
-      dice: 3
+      dice: Math.floor(Math.random() * 6) + 1
     };
   }
 
@@ -23,17 +23,20 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <button onClick={this.rollClick.bind(this)}>Roll</button>
 
-        <div onClick={this.diceClick.bind(this)}>
-          <Dice value={this.state.dice} />
+        <div>
+          <Dice value={this.state.dice} random={this.state.lastRolled} animate={!!this.state.lastRolled} />
         </div>
       </div>
     );
   }
 
-  diceClick(e) {
+  rollClick(e) {
+
     this.setState({
-      dice: Math.floor(Math.random() * 6) + 1
+      dice: Math.floor(Math.random() * 6) + 1,
+      lastRolled: Math.random(),
     });
   }
 }
