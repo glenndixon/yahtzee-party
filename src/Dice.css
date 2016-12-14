@@ -1,8 +1,8 @@
 .Dice {
   perspective: 800px;
-	perspective-origin: 50% 100px;
+	perspective-origin: 50% 50%;
   width: 200px;
-  margin: 0 auto;
+  height: 200px;
 }
 
 .Dice__cube {
