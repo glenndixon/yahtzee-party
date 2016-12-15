@@ -1,15 +1,26 @@
 import rankFrequency from './rank-frequency';
 import containsFrequency from './contains-frequency';
+import values from './values';
+import isYahtzee from './is-yahtzee';
 
-const SM_STRAIGHT_VALUE = 25;
-const LG_STRAIGHT_VALUE = 30;
-const FULL_HOUSE_VALUE = 40;
+const FULL_HOUSE_VALUE = 25;
+const SM_STRAIGHT_VALUE = 30;
+const LG_STRAIGHT_VALUE = 40;
 const YAHTZEE_VALUE = 50;
+
+const RANK_TO_UPPER_SECTION_ID = [
+  null,
+  'BOX_ONES',
+  'BOX_TWOS',
+  'BOX_THREES',
+  'BOX_FOURS',
+  'BOX_FIVES',
+  'BOX_SIXES',
+];
 
 function sum(arr) {
   return arr.reduce(function(s, item) {
     return s + item;
-
   }, 0);
 }
 
@@ -63,20 +74,35 @@ const SMALL_STRAIGHTS = [
   [3, 4, 5, 6]
 ];
 
-export function smStraightValue(board, hasYahtzeed, scores) {
-  const isSmStraight = SMALL_STRAIGHTS.some(function(straight) {
-    return straight.every(function(item) {
-      return board.includes(item);
+const LARGE_STRAIGHTS = [
+  [1, 2, 3, 4, 5],
+  [2, 3, 4, 5, 6]
+];
+
+function straightValuerFactory(straights, value) {
+  return function(board, scores) {
+    const isStraight = straights.some(function(straight) {
+      return straight.every(function(item) {
+        return board.includes(item);
+      });
     });
-  });
 
-  if (isSmStraight) return 25;
+    if (isStraight) return value;
+    if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[RANK_TO_UPPER_SECTION_ID[board[0]]]) return value;
+
+    return 0;
+  }
 }
 
-export function lgStraightValue(board, hasYahtzeed, scores) {
+const smStraightValue = straightValuerFactory(SMALL_STRAIGHTS, SM_STRAIGHT_VALUE);
+const lgStraightValue = straightValuerFactory(LARGE_STRAIGHTS, LG_STRAIGHT_VALUE);
 
-}
+export { smStraightValue as smStraightValue };
+export { lgStraightValue as lgStraightValue };
 
-export function fullHouseValue(board, hasYahtzeed, scores) {
+export function fullHouseValue(board, scores) {
   const freqHash = rankFrequency(board);
+  if (values(freqHash).sort().toString() === '2,3') return FULL_HOUSE_VALUE;
+  if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[RANK_TO_UPPER_SECTION_ID[board[0]]]) return FULL_HOUSE_VALUE;
+  return 0;
 }
