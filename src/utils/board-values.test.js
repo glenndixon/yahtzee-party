@@ -79,6 +79,15 @@ describe('lgStraightValue', () => {
   });
 });
 
+describe('chanceValue', () => {
+  it('works', () => {
+    expect(chanceValue([1,1,3,4,5])).toEqual(14);
+    expect(chanceValue([1,2,4,4,2])).toEqual(13);
+    expect(chanceValue([1,1,1,1,1])).toEqual(5);
+    expect(chanceValue([6,6,6,6,6])).toEqual(30);
+  });
+});
+
 describe('yahtzeeValue', () => {
   it('works', () => {
     expect(yahtzeeValue([1,1,3,4,5])).toEqual(0);
