@@ -2,7 +2,10 @@ import {
   tripsValue,
   quadsValue,
   smStraightValue,
-  lgStraightValue } from './board-values';
+  lgStraightValue,
+  fullHouseValue,
+  chanceValue,
+  yahtzeeValue } from './board-values';
 
 describe('tripsValue', () => {
   it('works', () => {
@@ -73,5 +76,14 @@ describe('lgStraightValue', () => {
       BOX_FIVES: 15,
       BOX_YAHTZEE: 50
     })).toEqual(40);
+  });
+});
+
+describe('yahtzeeValue', () => {
+  it('works', () => {
+    expect(yahtzeeValue([1,1,3,4,5])).toEqual(0);
+    expect(yahtzeeValue([1,2,4,4,2])).toEqual(0);
+    expect(yahtzeeValue([1,1,1,1,1])).toEqual(50);
+    expect(yahtzeeValue([6,6,6,6,6])).toEqual(50);
   });
 });

@@ -94,15 +94,36 @@ function straightValuerFactory(straights, value) {
   }
 }
 
-const smStraightValue = straightValuerFactory(SMALL_STRAIGHTS, SM_STRAIGHT_VALUE);
-const lgStraightValue = straightValuerFactory(LARGE_STRAIGHTS, LG_STRAIGHT_VALUE);
-
-export { smStraightValue as smStraightValue };
-export { lgStraightValue as lgStraightValue };
+export const smStraightValue = straightValuerFactory(SMALL_STRAIGHTS, SM_STRAIGHT_VALUE);
+export const lgStraightValue = straightValuerFactory(LARGE_STRAIGHTS, LG_STRAIGHT_VALUE);
 
 export function fullHouseValue(board, scores) {
   const freqHash = rankFrequency(board);
   if (values(freqHash).sort().toString() === '2,3') return FULL_HOUSE_VALUE;
   if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[RANK_TO_UPPER_SECTION_ID[board[0]]]) return FULL_HOUSE_VALUE;
   return 0;
+}
+
+export const chanceValue = sum;
+
+export function yahtzeeValue(board) {
+  return isYahtzee(board) ? YAHTZEE_VALUE : 0;
+}
+
+export function mapValues(board, scores) {
+  return {
+    BOX_ONES: onesValue(board),
+    BOX_TWOS: twosValue(board),
+    BOX_THREES: threesValue(board),
+    BOX_FOURS: foursValue(board),
+    BOX_FIVES: fivesValue(board),
+    BOX_SIXES: sixesValue(board),
+    BOX_TRIPS: tripsValue(board),
+    BOX_QUADS: quadsValue(board),
+    BOX_SM_STRAIGHT: smStraightValue(board, scores),
+    BOX_LG_STRAIGHT: lgStraightValue(board, scores),
+    BOX_FULL_HOUSE: fullHouseValue(board, scores),
+    BOX_CHANCE: chanceValue(board),
+    BOX_YAHTZEE: yahtzeeValue(board)
+  }
 }
