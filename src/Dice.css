@@ -2,7 +2,7 @@
   perspective: 800px;
 	perspective-origin: 50% 50%;
   width: 200px;
-  height: 200px;
+  xheight: 200px;
 }
 
 .Dice__cube {
@@ -40,6 +40,9 @@
   border: 10px solid #464646;
   background-color: white;
 }
+.Dice--black .Dice__face {
+  background-color: #464646;
+}
 
 .Dice__face--1 {
   transform: translateZ(100px);
@@ -70,6 +73,14 @@
   border-radius: 100%;
   background-color: #464646;
   position: absolute;
+}
+
+.Dice--black .Dice__pip {
+  background-color: #fff;
+}
+
+.Dice--blank .Dice__pip {
+  display: none;
 }
 
 .Dice__pip--tl,

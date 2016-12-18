@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Dice.css';
+import classnames from 'classnames';
 
 const FACES = [
   ['c'],
@@ -20,12 +21,17 @@ class Dice extends Component {
   }
 
   render() {
-    const spinClass = this.props.animate ? `spin-${this._animationIndex}` : '';
+    const { animate, locked, value, blank } = this.props;
+    const spinClass = animate ? `spin-${this._animationIndex}` : '';
+    const cls = classnames('Dice', {
+      'Dice--black': locked,
+      'Dice--blank': blank
+    });
 
     return (
-      <div className="Dice">
+      <div className={cls}>
         <div className={spinClass}>
-          <div className={`Dice__cube Dice__cube--${this.props.value}`}>
+          <div className={`Dice__cube Dice__cube--${value}`}>
             {FACES.map((pips, i) => <div className={`Dice__face Dice__face--${i + 1}`} key={i}>
               {pips.map((pip, j) => <div className={`Dice__pip Dice__pip--${pip}`} key={j}></div>)}
             </div>)}

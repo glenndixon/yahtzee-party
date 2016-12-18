@@ -65,8 +65,7 @@ const [tripsValue, quadsValue] = [3, 4].map(function(freq) {
   }
 });
 
-export { tripsValue as tripsValue };
-export { quadsValue as quadsValue };
+export { tripsValue, quadsValue }
 
 const SMALL_STRAIGHTS = [
   [1, 2, 3, 4],
