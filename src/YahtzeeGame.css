@@ -1,0 +1,12 @@
+.YahtzeeGame {
+  width: 360px;
+}
+
+.YahtzeeGame__dice {
+  display: flex;
+  height: 200px;
+}
+
+.YahtzeeGame__die {
+  width: 40px;
+}
