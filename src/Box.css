@@ -1,0 +1,22 @@
+.Box {
+  height: 100px;
+  text-align: center;
+  flex-basis: 14.2857%;
+  border: 2px solid #464646;
+}
+
+.Box__label {
+  line-height: 24px;
+}
+
+.Box__value {
+  font-size: 34px;
+  line-height: 48px;
+  padding-top: 6px;
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.Box__secondary {
+  line-height: 16px;
+  font-size: 12px;
+}

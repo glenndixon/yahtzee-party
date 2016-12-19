@@ -1,0 +1,13 @@
+.g-blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+}
+
+.g-blue {
+  color: #0095ff;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}

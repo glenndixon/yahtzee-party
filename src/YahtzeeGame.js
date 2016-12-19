@@ -19,14 +19,14 @@ class YahtzeeGame extends Component {
   }
 
   render() {
-    const { dice, rollPhase, scores } = this.state;
-    
+    const { dice, rollPhase, scores, yahtzeeBonusCount } = this.state;
+
     const board = this.rollPhase > 0 ? this._board() : null
 
     return (
       <div className="YahtzeeGame">
         <div className="YahtzeeGame__boxes">
-          <Boxes board={board} scores={scores} />
+          <Boxes board={board} scores={scores} yahtzeeBonusCount={yahtzeeBonusCount} />
         </div>
         <div className="YahtzeeGame__dice">
           {dice.map((die, i) => (

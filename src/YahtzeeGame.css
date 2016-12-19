@@ -1,6 +1,7 @@
 .YahtzeeGame {
-  width: 360px;
+  width: 600px;
   margin: 0 auto;
+  font-family: 'Oswald', sans-serif;
 }
 
 .YahtzeeGame__dice {
