@@ -1,14 +1,14 @@
 .Dice {
-  perspective: 800px;
+  perspective: 160px;
 	perspective-origin: 50% 50%;
-  width: 200px;
+  width: 40px;
   xheight: 200px;
 }
 
 .Dice__cube {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 40px;
+  height: 40px;
   transform-style: preserve-3d;
 
   transition: transform 0.5s linear;
@@ -33,9 +33,9 @@
 
 .Dice__face {
   position: absolute;
-	width: 200px;
-	height: 200px;
-  border: 10px solid #464646;
+	width: 40px;
+	height: 40px;
+  border: 2px solid #464646;
   background-color: white;
 }
 .Dice--black .Dice__face {
@@ -43,31 +43,31 @@
 }
 
 .Dice__face--1 {
-  transform: translateZ(100px);
+  transform: translateZ(20px);
 }
 .Dice__face--2 {
-  transform: rotateY(-270deg) translateX(100px);
+  transform: rotateY(-270deg) translateX(20px);
 	transform-origin: top right;
 }
 .Dice__face--3 {
-  transform: rotateX(-90deg) translateY(-100px);
+  transform: rotateX(-90deg) translateY(-20px);
 	transform-origin: top center;
 }
 .Dice__face--4 {
-  transform: rotateX(90deg) translateY(100px);
+  transform: rotateX(90deg) translateY(20px);
 	transform-origin: bottom center;
 }
 .Dice__face--5 {
-  transform: rotateY(270deg) translateX(-100px);
+  transform: rotateY(270deg) translateX(-20px);
 	transform-origin: center left;
 }
 .Dice__face--6 {
-  transform: translateZ(-100px) rotateY(180deg);
+  transform: translateZ(-20px) rotateY(180deg);
 }
 
 .Dice__pip {
-  height: 40px;
-  width: 40px;
+  height: 8px;
+  width: 8px;
   border-radius: 100%;
   background-color: #464646;
   position: absolute;
@@ -84,28 +84,30 @@
 .Dice__pip--tl,
 .Dice__pip--bl,
 .Dice__pip--l {
-  left: 25px;
+  left: 10%;
 }
 .Dice__pip--tr,
 .Dice__pip--br,
 .Dice__pip--r {
-  right: 25px;
+  right: 10%;
 }
 .Dice__pip--tr,
 .Dice__pip--tl {
-  top: 25px;
+  top: 10%;
 }
 .Dice__pip--br,
 .Dice__pip--bl {
-  bottom: 25px;
+  bottom: 10%;
 }
 .Dice__pip--l,
 .Dice__pip--r,
 .Dice__pip--c {
-  top: 70px;
+  transform: translateY(-50%);
+  top: 50%;
 }
 .Dice__pip--c {
-  left: 70px;
+  transform: translate(-50%, -50%);
+  left: 50%;
 }
 
 @keyframes spin-0 {

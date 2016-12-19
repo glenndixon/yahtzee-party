@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 class Boxes extends Component {
   render() {
     return (
-      <div class="Boxes">
+      <div className="Boxes">
       </div>
     );
   }

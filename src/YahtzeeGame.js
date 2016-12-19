@@ -1,25 +1,41 @@
 import './YahtzeeGame.css';
 import React, { Component } from 'react';
 import Dice from './Dice';
-import { mapValues } from './utils/board-values';
+import Boxes from './Boxes';
+//import { mapValues } from './utils/board-values';
+import isYahtzee from './utils/is-yahtzee';
 
 class YahtzeeGame extends Component {
   constructor() {
     super();
 
-    const dice = [1,2,3,4,5].map(value => ({ value }));
-    this.state = { dice, rollPhase: 0, lockedBits: 0};
+    this.state = {
+      dice: [1,2,3,4,5].map(value => ({ value })),
+      rollPhase: 0,
+      lockedBits: 0,
+      scores: {},
+      yahtzeeBonusCount: 0
+    };
   }
 
   render() {
-    const { dice, lockedBits, rollPhase } = this.state;
+    const { dice, rollPhase, scores } = this.state;
+    
+    const board = this.rollPhase > 0 ? this._board() : null
 
     return (
       <div className="YahtzeeGame">
+        <div className="YahtzeeGame__boxes">
+          <Boxes board={board} scores={scores} />
+        </div>
         <div className="YahtzeeGame__dice">
           {dice.map((die, i) => (
             <div key={i} onClick={this.diceClick.bind(this, i)} className="YahtzeeGame__die">
-              <Dice value={die.value} lastRolled={die.lastRolled} animate={!!die.lastRolled} locked={this._isDieLocked(i)} blank={rollPhase === 0} />
+              <Dice value={die.value}
+                    lastRolled={die.lastRolled}
+                    animate={!!die.lastRolled}
+                    locked={this._isDieLocked(i)}
+                    blank={rollPhase === 0} />
             </div>
           ))}
         </div>
@@ -49,13 +65,31 @@ class YahtzeeGame extends Component {
       });
     });
 
-    const diceValues = this.state.dice.map(die => die.value);
-    const values = mapValues(diceValues, {});
-
     this.setState({
       dice,
       rollPhase: this.state.rollPhase + 1
     });
+  }
+
+  selectBox(boxId, values) {
+    if (this.state.rollPhase === 0) return;
+    if (boxId in this.state.scores) return
+
+    const newScore = {};
+    newScore[boxId] = values[boxId];
+
+    this.setState({
+      scores: Object.assign({}, this.state.scores, newScore),
+      yahtzeeBonusCount: this.state.yahtzeeBonusCount + (this._isYahtzeeBonus() ? 1 : 0)
+    });
+  }
+
+  _board() {
+    return this.state.dice.map(d => d.value);
+  }
+
+  _isYahtzeeBonus() {
+    return this.state.scores.BOX_YAHTZEE && isYahtzee(this._board());
   }
 
   _isDieLocked(index) {
