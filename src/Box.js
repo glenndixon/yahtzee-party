@@ -4,7 +4,7 @@ import './Box.css';
 class Box extends Component {
   render() {
     return (
-      <div className="Box">
+      <div className="Box" onClick={this.props.onClick}>
         <div className="Box__label">{this.props.label}</div>
         <div className="Box__value">45</div>
         <div className="Box__secondary">

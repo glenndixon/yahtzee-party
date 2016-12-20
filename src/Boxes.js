@@ -16,34 +16,56 @@ class Boxes extends Component {
     const boardValue = board ? mapValues(board, scores) : null;
     const isBoardYahtzeeBonus = board && isYahtzee(board) && scores.BOX_YAHTZEE;
 
+    const drawBox = (boxId, label, children) => {
+      return (
+        <div className="Box" onClick={this.selectBox.bind(this)}>
+          <div className="Box__label">{label}</div>
+          <div className="Box__value">
+            {}
+          </div>
+          <div className="Box__secondary">
+            {children || null}
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="Boxes">
         <div className="Boxes__row">
-          <Box label="Aces" />
-          <Box label="Twos" />
-          <Box label="Threes" />
-          <Box label="Fours" />
-          <Box label="Fives" />
-          <Box label="Sixes" />
-          <Box label="Bonus">
-            Subtotal = 35
-          </Box>
+          {drawBox('BOX_ONES', "Aces")}
+          {drawBox('BOX_TWOS', "Twos")}
+          {drawBox('BOX_THREES', "Threes")}
+          {drawBox('BOX_FOURS', "Fours")}
+          {drawBox('BOX_FIVES', "Fives")}
+          {drawBox('BOX_SIXES', "Sixes")}
+          {drawBox('BOX_SIXES', "Sixes", (
+            <div>Subtotal = 35</div>
+          ))}
         </div>
         <div className="Boxes__row">
-          <Box label="Trips" />
-          <Box label="Quads" />
-          <Box label="Full House" />
-          <Box label="Sm. Str." />
-          <Box label="Lg. Str." />
-          <Box label="Chance" />
-          <Box label="Yahtzee">
-            {[...Array(yahtzeeBonusCount)].map((_, i) => <span key={i}>&#9733; </span>)}
+          {drawBox('BOX_TRIPS', "Trips")}
+          {drawBox('BOX_QUADS', "Quads")}
+          {drawBox('BOX_FULL_HOUSE', "Full House")}
+          {drawBox('BOX_SM_STRAIGHT', "Sm. Str.")}
+          {drawBox('BOX_LG_STRAIGHT', "Lg. Str.")}
+          {drawBox('BOX_CHANCE', "Chance")}
+          {drawBox('BOX_YAHTZEE', "Yahtzee", (
+            <div>
+              {[...Array(yahtzeeBonusCount)].map((_, i) => <span key={i}>&#9733; </span>)}
 
-            {isBoardYahtzeeBonus ? <span className="g-blink">&#9733;</span> : null}
-          </Box>
+              {isBoardYahtzeeBonus ? <span className="g-blink">&#9733;</span> : null}
+            </div>
+          ))}
         </div>
       </div>
     );
+  }
+
+  selectBox(boxId) {
+    if (boxId in this.props.scores) return;
+
+    this.props.selectBox(boxId);
   }
 }
 

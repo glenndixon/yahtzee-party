@@ -1,14 +1,15 @@
 .Dice {
-  perspective: 160px;
-	perspective-origin: 50% 50%;
-  width: 40px;
+  font-size: 80px;
+  perspective: 4em;
+  perspective-origin: 50% 50%;
+  width: 1em;
   xheight: 200px;
 }
 
 .Dice__cube {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 1em;
+  height: 1em;
   transform-style: preserve-3d;
 
   transition: transform 0.5s linear;
@@ -33,9 +34,9 @@
 
 .Dice__face {
   position: absolute;
-	width: 100%;
-	height: 100%;
-  border: 2px solid #464646;
+  width: 100%;
+  height: 100%;
+  border: .05em solid #464646;
   background-color: white;
 }
 .Dice--black .Dice__face {
@@ -43,26 +44,26 @@
 }
 
 .Dice__face--1 {
-  transform: translateZ(20px);
+  transform: translateZ(.5em);
 }
 .Dice__face--2 {
-  transform: rotateY(-270deg) translateX(20px);
-	transform-origin: top right;
+  transform: rotateY(-270deg) translateX(.5em);
+  transform-origin: top right;
 }
 .Dice__face--3 {
-  transform: rotateX(-90deg) translateY(-20px);
-	transform-origin: top center;
+  transform: rotateX(-90deg) translateY(-.5em);
+  transform-origin: top center;
 }
 .Dice__face--4 {
-  transform: rotateX(90deg) translateY(20px);
-	transform-origin: bottom center;
+  transform: rotateX(90deg) translateY(.5em);
+  transform-origin: bottom center;
 }
 .Dice__face--5 {
-  transform: rotateY(270deg) translateX(-20px);
-	transform-origin: center left;
+  transform: rotateY(270deg) translateX(-.5em);
+  transform-origin: center left;
 }
 .Dice__face--6 {
-  transform: translateZ(-20px) rotateY(180deg);
+  transform: translateZ(-.5em) rotateY(180deg);
 }
 
 .Dice__pip {
@@ -136,10 +137,10 @@
 
 
 .spin-0 {
-	animation: spin-0 1.25s 1 ease;
+  animation: spin-0 1.25s 1 ease;
   transform-style: preserve-3d;
 }
 .spin-1 {
-	animation: spin-1 1.25s 1 ease;
+  animation: spin-1 1.25s 1 ease;
   transform-style: preserve-3d;
 }

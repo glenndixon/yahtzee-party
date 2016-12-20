@@ -26,7 +26,10 @@ class YahtzeeGame extends Component {
     return (
       <div className="YahtzeeGame">
         <div className="YahtzeeGame__boxes">
-          <Boxes board={board} scores={scores} yahtzeeBonusCount={yahtzeeBonusCount} />
+          <Boxes board={board}
+                 scores={scores}
+                 yahtzeeBonusCount={yahtzeeBonusCount}
+                 selectBox={this.selectBox.bind(this)} />
         </div>
         <div className="YahtzeeGame__dice">
           {dice.map((die, i) => (
