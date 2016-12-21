@@ -9,19 +9,28 @@ import isYahtzee from './utils/is-yahtzee';
 //   Dice
 //   Total
 
+// this should match the dice spin animation length in Dice.css
+const SPIN_ANIMATION_LENGTH = 1250;
+
 class Boxes extends Component {
   render() {
     const { board, scores, yahtzeeBonusCount } = this.props;
 
-    const boardValue = board ? mapValues(board, scores) : null;
+    const boardValue = board ? mapValues(board, scores) : {};
     const isBoardYahtzeeBonus = board && isYahtzee(board) && scores.BOX_YAHTZEE;
 
     const drawBox = (boxId, label, children) => {
+      let value = null;
+      if (boxId in scores) {
+        value = scores[boxId];
+      } else if (boardValue[boxId]) {
+        value = (<span>{boardValue[boxId]}</span>);
+      }
       return (
-        <div className="Box" onClick={this.selectBox.bind(this)}>
+        <div className="Box" onClick={this.selectBox.bind(this, boxId, boardValue)}>
           <div className="Box__label">{label}</div>
           <div className="Box__value">
-            {}
+            {value}
           </div>
           <div className="Box__secondary">
             {children || null}
@@ -39,7 +48,7 @@ class Boxes extends Component {
           {drawBox('BOX_FOURS', "Fours")}
           {drawBox('BOX_FIVES', "Fives")}
           {drawBox('BOX_SIXES', "Sixes")}
-          {drawBox('BOX_SIXES', "Sixes", (
+          {drawBox('', "Sixes", (
             <div>Subtotal = 35</div>
           ))}
         </div>
@@ -62,10 +71,11 @@ class Boxes extends Component {
     );
   }
 
-  selectBox(boxId) {
+  selectBox(boxId, boardValue) {
+    if (!boardValue) return;
     if (boxId in this.props.scores) return;
 
-    this.props.selectBox(boxId);
+    this.props.selectBox(boxId, boardValue);
   }
 }
 

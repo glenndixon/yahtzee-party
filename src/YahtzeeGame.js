@@ -21,7 +21,7 @@ class YahtzeeGame extends Component {
   render() {
     const { dice, rollPhase, scores, yahtzeeBonusCount } = this.state;
 
-    const board = this.rollPhase > 0 ? this._board() : null
+    const board = rollPhase > 0 ? this._board() : null
 
     return (
       <div className="YahtzeeGame">

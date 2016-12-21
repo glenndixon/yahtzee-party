@@ -16,6 +16,9 @@
   padding-top: 6px;
   font-family: 'Shadows Into Light', cursive;
 }
+.Box__value--pending {
+  color: red;
+}
 
 .Box__secondary {
   line-height: 16px;
