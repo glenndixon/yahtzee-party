@@ -5,6 +5,8 @@ import Boxes from './Boxes';
 //import { mapValues } from './utils/board-values';
 import isYahtzee from './utils/is-yahtzee';
 
+const SPIN_DURATION = 1250;
+
 class YahtzeeGame extends Component {
   constructor() {
     super();
@@ -19,9 +21,9 @@ class YahtzeeGame extends Component {
   }
 
   render() {
-    const { dice, rollPhase, scores, yahtzeeBonusCount } = this.state;
+    const { dice, rollPhase, scores, yahtzeeBonusCount, hideBoardValues } = this.state;
 
-    const board = rollPhase > 0 ? this._board() : null
+    const board = (!hideBoardValues && rollPhase > 0) ? this._board() : null
 
     return (
       <div className="YahtzeeGame">
@@ -42,7 +44,7 @@ class YahtzeeGame extends Component {
             </div>
           ))}
         </div>
-        <button onClick={this.rollClick.bind(this)}>Roll</button>
+        <button onClick={this.rollClick.bind(this)} disabled={this._shouldDisableRollButton()}>Roll</button>
       </div>
     );
   }
@@ -57,6 +59,7 @@ class YahtzeeGame extends Component {
 
   rollClick(e) {
     if (this.state.rollPhase === 3) return;
+    if (this._areAllLocked()) return;
 
     const dice = this.state.dice.map((die, i) => {
       if (this._isDieLocked(i)) return die;
@@ -70,8 +73,15 @@ class YahtzeeGame extends Component {
 
     this.setState({
       dice,
-      rollPhase: this.state.rollPhase + 1
+      rollPhase: this.state.rollPhase + 1,
+      hideBoardValues: true
     });
+
+    if (this._spinTimeout) clearTimeout(this._spinTimeout);
+    this._spinTimeout = setTimeout(() => {
+      this._spinTimeout = null;
+      this.setState({ hideBoardValues: false });
+    }, SPIN_DURATION);
   }
 
   selectBox(boxId, values) {
@@ -83,7 +93,9 @@ class YahtzeeGame extends Component {
 
     this.setState({
       scores: Object.assign({}, this.state.scores, newScore),
-      yahtzeeBonusCount: this.state.yahtzeeBonusCount + (this._isYahtzeeBonus() ? 1 : 0)
+      yahtzeeBonusCount: this.state.yahtzeeBonusCount + (this._isYahtzeeBonus() ? 1 : 0),
+      rollPhase: 0,
+      lockedBits: 0
     });
   }
 
@@ -101,6 +113,10 @@ class YahtzeeGame extends Component {
 
   _areAllLocked() {
     return this.state.lockedBits === 0b11111;
+  }
+
+  _shouldDisableRollButton() {
+    return this._areAllLocked() || this.rollPhase === 3;
   }
 }
 

@@ -4,6 +4,10 @@
   font-family: 'Oswald', sans-serif;
 }
 
+.YahtzeeGame__boxes {
+  margin: 10px 0;
+}
+
 .YahtzeeGame__dice {
   display: flex;
   padding-top: 20px;
@@ -13,6 +17,6 @@
 }
 
 .YahtzeeGame__die {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
 }

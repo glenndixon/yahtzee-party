@@ -3,11 +3,7 @@ import Box from './Box';
 import { mapValues } from './utils/board-values';
 import './Boxes.css';
 import isYahtzee from './utils/is-yahtzee';
-
-// 123456SB
-// 34FSLCYB
-//   Dice
-//   Total
+import classnames from 'classnames';
 
 // this should match the dice spin animation length in Dice.css
 const SPIN_ANIMATION_LENGTH = 1250;
@@ -26,8 +22,12 @@ class Boxes extends Component {
       } else if (boardValue[boxId]) {
         value = (<span>{boardValue[boxId]}</span>);
       }
+
+      const clsName = classnames('Box', {
+        'Box--filled': boxId in scores
+      });
       return (
-        <div className="Box" onClick={this.selectBox.bind(this, boxId, boardValue)}>
+        <div className={clsName} onClick={this.selectBox.bind(this, boxId, boardValue)}>
           <div className="Box__label">{label}</div>
           <div className="Box__value">
             {value}
@@ -48,7 +48,7 @@ class Boxes extends Component {
           {drawBox('BOX_FOURS', "Fours")}
           {drawBox('BOX_FIVES', "Fives")}
           {drawBox('BOX_SIXES', "Sixes")}
-          {drawBox('', "Sixes", (
+          {drawBox('', "Bonus", (
             <div>Subtotal = 35</div>
           ))}
         </div>

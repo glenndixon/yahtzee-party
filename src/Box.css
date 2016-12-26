@@ -4,6 +4,10 @@
   flex-basis: 14.2857%;
   border: 2px solid #464646;
 }
+.Box.Box--filled {
+  background-color: #464646;
+  color: #fff;
+}
 
 .Box__label {
   line-height: 24px;
