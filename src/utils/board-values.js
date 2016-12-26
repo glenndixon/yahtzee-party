@@ -2,27 +2,13 @@ import rankFrequency from './rank-frequency';
 import containsFrequency from './contains-frequency';
 import values from './values';
 import isYahtzee from './is-yahtzee';
+import sum from './sum';
+import { UPPER_SECTION_BOX_IDS } from './upper-section';
 
 const FULL_HOUSE_VALUE = 25;
 const SM_STRAIGHT_VALUE = 30;
 const LG_STRAIGHT_VALUE = 40;
 const YAHTZEE_VALUE = 50;
-
-const RANK_TO_UPPER_SECTION_ID = [
-  null,
-  'BOX_ONES',
-  'BOX_TWOS',
-  'BOX_THREES',
-  'BOX_FOURS',
-  'BOX_FIVES',
-  'BOX_SIXES',
-];
-
-function sum(arr) {
-  return arr.reduce(function(s, item) {
-    return s + item;
-  }, 0);
-}
 
 function upperSectionValue(value, board) {
   return sum(board.filter(function(item) {
@@ -30,29 +16,12 @@ function upperSectionValue(value, board) {
   }));
 }
 
-export function onesValue(board) {
-  return upperSectionValue(1, board);
-}
-
-export function twosValue(board) {
-  return upperSectionValue(2, board);
-}
-
-export function threesValue(board) {
-  return upperSectionValue(3, board);
-}
-
-export function foursValue(board) {
-  return upperSectionValue(4, board);
-}
-
-export function fivesValue(board) {
-  return upperSectionValue(5, board);
-}
-
-export function sixesValue(board) {
-  return upperSectionValue(6, board);
-}
+const [onesValue, twosValue, threesValue, foursValue, fivesValue, sixesValue] = [1, 2, 3, 4, 5, 6].map(function(rank) {
+  return function(board) {
+    return upperSectionValue(rank, board);
+  }
+});
+export { onesValue, twosValue, threesValue, foursValue, fivesValue, sixesValue };
 
 
 const [tripsValue, quadsValue] = [3, 4].map(function(freq) {
@@ -65,7 +34,7 @@ const [tripsValue, quadsValue] = [3, 4].map(function(freq) {
   }
 });
 
-export { tripsValue, quadsValue }
+export { tripsValue, quadsValue };
 
 const SMALL_STRAIGHTS = [
   [1, 2, 3, 4],
@@ -87,7 +56,7 @@ function straightValuerFactory(straights, value) {
     });
 
     if (isStraight) return value;
-    if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[RANK_TO_UPPER_SECTION_ID[board[0]]]) return value;
+    if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[UPPER_SECTION_BOX_IDS[board[0] - 1]]) return value;
 
     return 0;
   }
@@ -99,7 +68,7 @@ export const lgStraightValue = straightValuerFactory(LARGE_STRAIGHTS, LG_STRAIGH
 export function fullHouseValue(board, scores) {
   const freqHash = rankFrequency(board);
   if (values(freqHash).sort().toString() === '2,3') return FULL_HOUSE_VALUE;
-  if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[RANK_TO_UPPER_SECTION_ID[board[0]]]) return FULL_HOUSE_VALUE;
+  if (scores.BOX_YAHTZEE && isYahtzee(board) && scores[UPPER_SECTION_BOX_IDS[board[0] - 1]]) return FULL_HOUSE_VALUE;
   return 0;
 }
 

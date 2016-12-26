@@ -4,6 +4,11 @@ import { mapValues } from './utils/board-values';
 import './Boxes.css';
 import isYahtzee from './utils/is-yahtzee';
 import classnames from 'classnames';
+import {
+  upperSectionSum,
+  UPPER_SECTION_BONUS,
+  UPPER_SECTION_BONUS_REQ
+} from './utils/upper-section';
 
 // this should match the dice spin animation length in Dice.css
 const SPIN_ANIMATION_LENGTH = 1250;
@@ -14,6 +19,7 @@ class Boxes extends Component {
 
     const boardValue = board ? mapValues(board, scores) : {};
     const isBoardYahtzeeBonus = board && isYahtzee(board) && scores.BOX_YAHTZEE;
+    const subtotal = upperSectionSum(scores);
 
     const drawBox = (boxId, label, children) => {
       let value = null;
@@ -49,7 +55,7 @@ class Boxes extends Component {
           {drawBox('BOX_FIVES', "Fives")}
           {drawBox('BOX_SIXES', "Sixes")}
           {drawBox('', "Bonus", (
-            <div>Subtotal = 35</div>
+            <div>{subtotal > UPPER_SECTION_BONUS_REQ ? UPPER_SECTION_BONUS : 0} - Subtotal = {subtotal}</div>
           ))}
         </div>
         <div className="Boxes__row">

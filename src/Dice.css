@@ -79,7 +79,7 @@
 }
 
 .Dice--blank .Dice__pip {
-  display: none;
+  xdisplay: none;
 }
 
 .Dice__pip--tl,
