@@ -31,7 +31,7 @@ class Boxes extends Component {
         value = UPPER_SECTION_BONUS;
       }
       const isFilled = boxId in scores;
-      const isFillable = !isFilled && boxId != 'BONUS';
+      const isFillable = board && !isFilled && boxId != 'BONUS';
       const onClick = isFillable ? this.selectBox.bind(this, boxId, boardValue) : null;
 
       const clsName = classnames('Box', {
