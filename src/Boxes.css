@@ -1,5 +1,6 @@
 .Boxes {
-
+  border: 2px solid #464646;
+  border-width: 0 0 2px 2px;
 }
 .Boxes__row {
   display: flex;

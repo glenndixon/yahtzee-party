@@ -27,13 +27,20 @@ class Boxes extends Component {
         value = scores[boxId];
       } else if (boardValue[boxId]) {
         value = (<span>{boardValue[boxId]}</span>);
+      } else if (subtotal > UPPER_SECTION_BONUS_REQ && boxId ==='BONUS') {
+        value = UPPER_SECTION_BONUS;
       }
+      const isFilled = boxId in scores;
+      const isFillable = !isFilled && boxId != 'BONUS';
+      const onClick = isFillable ? this.selectBox.bind(this, boxId, boardValue) : null;
 
       const clsName = classnames('Box', {
-        'Box--filled': boxId in scores
+        'Box--filled': isFilled,
+        'Box--fillable': isFillable
       });
+
       return (
-        <div className={clsName} onClick={this.selectBox.bind(this, boxId, boardValue)}>
+        <div className={clsName} onClick={onClick}>
           <div className="Box__label">{label}</div>
           <div className="Box__value">
             {value}
@@ -54,8 +61,8 @@ class Boxes extends Component {
           {drawBox('BOX_FOURS', "Fours")}
           {drawBox('BOX_FIVES', "Fives")}
           {drawBox('BOX_SIXES', "Sixes")}
-          {drawBox('', "Bonus", (
-            <div>{subtotal > UPPER_SECTION_BONUS_REQ ? UPPER_SECTION_BONUS : 0} - Subtotal = {subtotal}</div>
+          {drawBox('BONUS', "Bonus", (
+            <div>Subtotal: {subtotal}</div>
           ))}
         </div>
         <div className="Boxes__row">
