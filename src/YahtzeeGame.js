@@ -13,25 +13,27 @@ import {
 
 const SPIN_DURATION = 1250;
 
+const INITIAL_STATE = {
+  dice: [6,6,6,6,6].map(value => ({ value })),
+  rollPhase: 0,
+  lockedBits: 0,
+  scores: {},
+  yahtzeeBonusCount: 0,
+  round: 0
+}
+
 class YahtzeeGame extends Component {
   constructor() {
     super();
 
-    this.state = {
-      dice: [1,2,3,4,5].map(value => ({ value })),
-      rollPhase: 0,
-      lockedBits: 0,
-      scores: {},
-      yahtzeeBonusCount: 0
-    };
+    this.state = INITIAL_STATE;
   }
 
   render() {
     const { dice, rollPhase, scores, yahtzeeBonusCount, hideBoardValues } = this.state;
 
-    const board = (!hideBoardValues && rollPhase > 0) ? this._board() : null
-
-    console.log(this._totalScore());
+    const board = (!hideBoardValues && rollPhase > 0) ? this._board() : null;
+    const buttonText = this.state.round === 13 ? 'Play Again' : 'Roll';
 
     return (
       <div className="YahtzeeGame">
@@ -39,6 +41,7 @@ class YahtzeeGame extends Component {
           <Boxes board={board}
                  scores={scores}
                  yahtzeeBonusCount={yahtzeeBonusCount}
+                 hasMadeBonus={this._hasMadeBonus()}
                  selectBox={this.selectBox.bind(this)} />
         </div>
         <div className="YahtzeeGame__dice">
@@ -53,7 +56,15 @@ class YahtzeeGame extends Component {
             </div>
           ))}
         </div>
-        <button onClick={this.rollClick.bind(this)} disabled={this._shouldDisableRollButton()}>Roll</button>
+        <button className="YahtzeeGame__button" onClick={this.rollClick.bind(this)} disabled={this._shouldDisableRollButton()}>
+          {buttonText}
+        </button>
+        <div className="YahtzeeGame__rolls">
+          {this._rollsLeftText()}
+        </div>
+        <div className="YahtzeeGame__score">
+          {this._scoreText()}
+        </div>
       </div>
     );
   }
@@ -67,14 +78,18 @@ class YahtzeeGame extends Component {
   }
 
   rollClick(e) {
-    if (this.state.rollPhase === 3) return;
-    if (this._areAllLocked()) return;
+    if (this._shouldDisableRollButton()) return;
+
+    if (this.state.round === 13) {
+      this.setState(INITIAL_STATE);
+      return;
+    }
 
     const dice = this.state.dice.map((die, i) => {
       if (this._isDieLocked(i)) return die;
 
       // update the value and lastRolled for all the non-locked dice
-      return Object.assign(die, {
+      return Object.assign({}, die, {
         value: Math.floor(Math.random() * 6) + 1,
         lastRolled: new Date().getTime()
       });
@@ -104,7 +119,8 @@ class YahtzeeGame extends Component {
       scores: Object.assign({}, this.state.scores, newScore),
       yahtzeeBonusCount: this.state.yahtzeeBonusCount + (this._isYahtzeeBonus() ? 1 : 0),
       rollPhase: 0,
-      lockedBits: 0
+      lockedBits: 0,
+      round: this.state.round + 1
     });
   }
 
@@ -125,7 +141,7 @@ class YahtzeeGame extends Component {
   }
 
   _shouldDisableRollButton() {
-    return this._areAllLocked() || this.rollPhase === 3;
+    return this._areAllLocked() || this.state.rollPhase === 3 || this.state.hideBoardValues;
   }
 
   _areDiceClickable() {
@@ -133,9 +149,24 @@ class YahtzeeGame extends Component {
   }
 
   _totalScore() {
-    const subtotal = upperSectionSum(this.state.scores);
-    const bonus = subtotal >= UPPER_SECTION_BONUS_REQ ? UPPER_SECTION_BONUS : 0
+    const bonus = this._hasMadeBonus() ? UPPER_SECTION_BONUS : 0
     return sum(values(this.state.scores)) + this.state.yahtzeeBonusCount * 100 + bonus;
+  }
+
+  _hasMadeBonus() {
+    return upperSectionSum(this.state.scores) >= UPPER_SECTION_BONUS_REQ;
+  }
+
+  _rollsLeftText() {
+    if (this.state.round === 13) return "";
+    if (this.state.rollPhase === 2) return "1 roll left";
+    return `${3 - this.state.rollPhase} rolls left`;
+  }
+
+  _scoreText() {
+    if (this.state.round > 0) {
+      return this._totalScore();
+    }
   }
 }
 

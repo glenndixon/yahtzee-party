@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-import Box from './Box';
 import { mapValues } from './utils/board-values';
 import './Boxes.css';
+import './Box.css';
 import isYahtzee from './utils/is-yahtzee';
 import classnames from 'classnames';
-import {
-  upperSectionSum,
-  UPPER_SECTION_BONUS,
-  UPPER_SECTION_BONUS_REQ
-} from './utils/upper-section';
-
-// this should match the dice spin animation length in Dice.css
-const SPIN_ANIMATION_LENGTH = 1250;
+import { UPPER_SECTION_BONUS, upperSectionSum } from './utils/upper-section';
 
 class Boxes extends Component {
   render() {
-    const { board, scores, yahtzeeBonusCount } = this.props;
+    const { board, scores, yahtzeeBonusCount, hasMadeBonus } = this.props;
 
     const boardValue = board ? mapValues(board, scores) : {};
     const isBoardYahtzeeBonus = board && isYahtzee(board) && scores.BOX_YAHTZEE;
@@ -27,11 +20,11 @@ class Boxes extends Component {
         value = scores[boxId];
       } else if (boardValue[boxId]) {
         value = (<span>{boardValue[boxId]}</span>);
-      } else if (subtotal >= UPPER_SECTION_BONUS_REQ && boxId ==='BONUS') {
+      } else if (hasMadeBonus && boxId ==='BONUS') {
         value = UPPER_SECTION_BONUS;
       }
       const isFilled = boxId in scores;
-      const isFillable = board && !isFilled && boxId != 'BONUS';
+      const isFillable = board && !isFilled && boxId !== 'BONUS';
       const onClick = isFillable ? this.selectBox.bind(this, boxId, boardValue) : null;
 
       const clsName = classnames('Box', {
