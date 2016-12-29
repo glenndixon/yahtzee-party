@@ -27,7 +27,7 @@ class Boxes extends Component {
         value = scores[boxId];
       } else if (boardValue[boxId]) {
         value = (<span>{boardValue[boxId]}</span>);
-      } else if (subtotal > UPPER_SECTION_BONUS_REQ && boxId ==='BONUS') {
+      } else if (subtotal >= UPPER_SECTION_BONUS_REQ && boxId ==='BONUS') {
         value = UPPER_SECTION_BONUS;
       }
       const isFilled = boxId in scores;
@@ -36,7 +36,8 @@ class Boxes extends Component {
 
       const clsName = classnames('Box', {
         'Box--filled': isFilled,
-        'Box--fillable': isFillable
+        'Box--fillable': isFillable,
+        'Box--dark': boxId ==='BONUS'
       });
 
       return (

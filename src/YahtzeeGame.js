@@ -2,8 +2,14 @@ import './YahtzeeGame.css';
 import React, { Component } from 'react';
 import Dice from './Dice';
 import Boxes from './Boxes';
-//import { mapValues } from './utils/board-values';
+import values from './utils/values';
+import sum from './utils/sum';
 import isYahtzee from './utils/is-yahtzee';
+import {
+  upperSectionSum,
+  UPPER_SECTION_BONUS,
+  UPPER_SECTION_BONUS_REQ
+} from './utils/upper-section';
 
 const SPIN_DURATION = 1250;
 
@@ -25,6 +31,8 @@ class YahtzeeGame extends Component {
 
     const board = (!hideBoardValues && rollPhase > 0) ? this._board() : null
 
+    console.log(this._totalScore());
+
     return (
       <div className="YahtzeeGame">
         <div className="YahtzeeGame__boxes">
@@ -35,12 +43,13 @@ class YahtzeeGame extends Component {
         </div>
         <div className="YahtzeeGame__dice">
           {dice.map((die, i) => (
-            <div key={i} onClick={this.diceClick.bind(this, i)} className="YahtzeeGame__die">
+            <div key={i} onClick={this.diceClick.bind(this, i)}>
               <Dice value={die.value}
                     lastRolled={die.lastRolled}
                     animate={!!die.lastRolled}
                     locked={this._isDieLocked(i)}
-                    blank={rollPhase === 0} />
+                    blank={rollPhase === 0}
+                    clickable={this._areDiceClickable()} />
             </div>
           ))}
         </div>
@@ -50,7 +59,7 @@ class YahtzeeGame extends Component {
   }
 
   diceClick(index) {
-    if ([0, 3].includes(this.state.rollPhase)) return;
+    if (!this._areDiceClickable()) return;
 
     this.setState({
       lockedBits: this.state.lockedBits ^ (1 << index)
@@ -117,6 +126,16 @@ class YahtzeeGame extends Component {
 
   _shouldDisableRollButton() {
     return this._areAllLocked() || this.rollPhase === 3;
+  }
+
+  _areDiceClickable() {
+    return [1, 2].includes(this.state.rollPhase);
+  }
+
+  _totalScore() {
+    const subtotal = upperSectionSum(this.state.scores);
+    const bonus = subtotal >= UPPER_SECTION_BONUS_REQ ? UPPER_SECTION_BONUS : 0
+    return sum(values(this.state.scores)) + this.state.yahtzeeBonusCount * 100 + bonus;
   }
 }
 

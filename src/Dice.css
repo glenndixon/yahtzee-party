@@ -6,6 +6,10 @@
   xheight: 200px;
 }
 
+.Dice--clickable {
+  cursor: pointer;
+}
+
 .Dice__cube {
   position: relative;
   width: 1em;
@@ -41,6 +45,9 @@
 }
 .Dice--black .Dice__face {
   background-color: #464646;
+}
+.Dice--clickable:not(.Dice--black) .Dice__face:hover {
+  background-color: #eee;
 }
 
 .Dice__face--1 {

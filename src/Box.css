@@ -15,6 +15,9 @@
 .Box.Box--fillable:hover {
   background-color: #eee;
 }
+.Box.Box--dark {
+  background-color: #ddd;
+}
 
 .Box__label {
   line-height: 36px;

@@ -21,11 +21,12 @@ class Dice extends Component {
   }
 
   render() {
-    const { animate, locked, value, blank } = this.props;
+    const { animate, locked, value, blank, clickable } = this.props;
     const spinClass = animate ? `spin-${this._animationIndex}` : '';
     const cls = classnames('Dice', {
       'Dice--black': locked,
-      'Dice--blank': blank
+      'Dice--blank': blank,
+      'Dice--clickable': clickable
     });
 
     return (
