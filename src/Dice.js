@@ -11,7 +11,7 @@ const FACES = [
   ['tl', 'tr', 'bl', 'br', 'l', 'r'],
 ];
 
-const NUM_ANIMATIONS = 2;
+const NUM_ANIMATIONS = 6;
 
 class Dice extends Component {
   constructor() {
