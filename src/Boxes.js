@@ -56,7 +56,7 @@ class Boxes extends Component {
           {drawBox('BOX_FIVES', "Fives")}
           {drawBox('BOX_SIXES', "Sixes")}
           {drawBox('BONUS', "Bonus", (
-            <div>Subtotal: {subtotal}</div>
+            <div>Total: {subtotal} / 63</div>
           ))}
         </div>
         <div className="Boxes__row">
