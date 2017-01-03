@@ -11,18 +11,10 @@ const FACES = [
   ['tl', 'tr', 'bl', 'br', 'l', 'r'],
 ];
 
-const NUM_ANIMATIONS = 6;
-
 class Dice extends Component {
-  constructor() {
-    super();
-
-    this._animationIndex = Math.floor(Math.random() * NUM_ANIMATIONS);
-  }
-
   render() {
-    const { animate, locked, value, blank, clickable } = this.props;
-    const spinClass = animate ? `spin-${this._animationIndex}` : '';
+    const { locked, value, blank, clickable } = this.props;
+
     const cls = classnames('Dice', {
       'Dice--black': locked,
       'Dice--blank': blank,
@@ -31,7 +23,7 @@ class Dice extends Component {
 
     return (
       <div className={cls}>
-        <div className={spinClass}>
+        <div ref={(div) => { this._spinNode = div; }}>
           <div className={`Dice__cube Dice__cube--${value}`}>
             {FACES.map((pips, i) => <div className={`Dice__face Dice__face--${i + 1}`} key={i}>
               {pips.map((pip, j) => <div className={`Dice__pip Dice__pip--${pip}`} key={j}></div>)}
@@ -42,10 +34,12 @@ class Dice extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.animate && (nextProps.lastRolled !== this.props.lastRolled)) {
-      this._animationIndex += Math.floor(Math.random() * (NUM_ANIMATIONS - 1) + 1);
-      this._animationIndex = this._animationIndex % NUM_ANIMATIONS;
+  componentDidUpdate(prevProps) {
+    if (this.props.animate && prevProps.lastRolled !== this.props.lastRolled) {
+      this._spinNode.className = '';
+      setTimeout(() => {
+        this._spinNode.className = `spin-${this.props.spinId}`;
+      }, 0);
     }
   }
 }

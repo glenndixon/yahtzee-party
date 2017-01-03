@@ -52,6 +52,7 @@ class YahtzeeGame extends Component {
                     animate={!!die.lastRolled}
                     locked={this._isDieLocked(i)}
                     blank={rollPhase === 0}
+                    spinId={i}
                     clickable={this._areDiceClickable()} />
             </div>
           ))}
