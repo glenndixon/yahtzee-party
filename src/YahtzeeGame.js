@@ -70,6 +70,20 @@ class YahtzeeGame extends Component {
     );
   }
 
+  componentWillMount() {
+    document.addEventListener("keydown", this._keyDownHandler = (e) => {
+      if (49 <= e.keyCode && e.keyCode <= 53) {
+        this.diceClick(e.keyCode - 49);
+      } else if (e.keyCode === 32) {
+        this.rollClick();
+      }
+    }, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this._keyDownHandler, false);
+  }
+
   diceClick(index) {
     if (!this._areDiceClickable()) return;
 
@@ -78,7 +92,7 @@ class YahtzeeGame extends Component {
     });
   }
 
-  rollClick(e) {
+  rollClick() {
     if (this._shouldDisableRollButton()) return;
 
     if (this.state.round === 13) {
